@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos - Loja de Roupas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Loja de Roupas</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="produtos.html">Produtos</a></li>
+                <li><a href="carrinho.html">Carrinho</a></li>
+            </ul>
+        </nav>
+        <div class="cart-icon">
+            <li><a href="carrinho.html">Carrinho</a></li>
+                <span id="cart-count">0</span>
+            </a>
+        </div>
+    </header>
+
+    <section id="products">
+        <h2>Produtos</h2>
+        <div class="content">
+            <div class="filter">
+                <label>Categoria:</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" class="category-checkbox" value="masculino"> Masculino</label>
+                    <label><input type="checkbox" class="category-checkbox" value="feminino"> Feminino</label>
+                    <label><input type="checkbox" class="category-checkbox" value="P"> P</label>
+                    <label><input type="checkbox" class="category-checkbox" value="M"> M</label>
+                    <label><input type="checkbox" class="category-checkbox" value="G"> G</label>
+                    <label><input type="checkbox" class="category-checkbox" value="Plus Size"> Plus Size</label>
+                </div>
+                <input type="text" id="search" placeholder="Pesquisar produtos">
+            </div>
+            <div id="product-list">
+                <!-- Lista de produtos com imagem, preço e botão de compra -->
+                <div class="product" data-id="1" data-name="Camisa Masculina" data-category="masculino" data-price="50" data-image="produto1.jpg" data-sizes="P,M,G">
+                    <img src="produto1.jpg" alt="Camisa Masculina">
+                    <h3>Camisa Masculina</h3>
+                    <p>R$ 50</p>
+                    <label for="size1">Tamanho:</label>
+                    <select id="size1">
+                        <option value="P">P</option>
+                        <option value="M">M</option>
+                        <option value="G">G</option>
+                    </select>
+                    <button onclick="addToCart(1, document.getElementById('size1').value)">Adicionar ao Carrinho</button>
+                </div>
+                <div class="product" data-id="2" data-name="Camisa Feminina" data-category="feminino" data-price="45" data-image="produto2.jpg" data-sizes="P,M,Plus Size">
+                    <img src="produto2.jpg" alt="Camisa Feminina">
+                    <h3>Camisa Feminina</h3>
+                    <p>R$ 45</p>
+                    <label for="size2">Tamanho:</label>
+                    <select id="size2">
+                        <option value="P">P</option>
+                        <option value="M">M</option>
+                        <option value="Plus Size">Plus Size</option>
+                    </select>
+                    <button onclick="addToCart(2, document.getElementById('size2').value)">Adicionar ao Carrinho</button>
+                </div>
+                <div class="product" data-id="3" data-name="Calça Jeans" data-category="masculino" data-price="100" data-image="produto3.jpg" data-sizes="M,G,Plus Size">
+                    <img src="produto3.jpg" alt="Calça Jeans">
+                    <h3>Calça Jeans</h3>
+                    <p>R$ 100</p>
+                    <label for="size3">Tamanho:</label>
+                    <select id="size3">
+                        <option value="M">M</option>
+                        <option value="G">G</option>
+                        <option value="Plus Size">Plus Size</option>
+                    </select>
+                    <button onclick="addToCart(3, document.getElementById('size3').value)">Adicionar ao Carrinho</button>
+                </div>
+                <!-- Adicione mais produtos conforme necessário -->
+            </div>
+        </div>
+    </section>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
