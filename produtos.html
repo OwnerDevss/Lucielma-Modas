@@ -13,11 +13,11 @@
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="produtos.html">Produtos</a></li>
-                <li><a href="carrinho.html">Carrinho</a></li>
             </ul>
         </nav>
         <div class="cart-icon">
-            <li><a href="carrinho.html">Carrinho</a></li>
+            <a href="carrinho.html">
+                <span class="cart-symbol">&#128722;</span> <!-- Unicode do carrinho 🛒 -->
                 <span id="cart-count">0</span>
             </a>
         </div>
@@ -37,9 +37,11 @@
                     <label><input type="checkbox" class="category-checkbox" value="Plus Size"> Plus Size</label>
                 </div>
                 <input type="text" id="search" placeholder="Pesquisar produtos">
+                <button id="clear-filters">Limpar Filtros</button>
             </div>
+            
             <div id="product-list">
-                <!-- Lista de produtos com imagem, preço e botão de compra -->
+                <!-- Produtos Dinâmicos -->
                 <div class="product" data-id="1" data-name="Camisa Masculina" data-category="masculino" data-price="50" data-image="produto1.jpg" data-sizes="P,M,G">
                     <img src="produto1.jpg" alt="Camisa Masculina">
                     <h3>Camisa Masculina</h3>
@@ -76,7 +78,6 @@
                     </select>
                     <button onclick="addToCart(3, document.getElementById('size3').value)">Adicionar ao Carrinho</button>
                 </div>
-                <!-- Adicione mais produtos conforme necessário -->
             </div>
         </div>
     </section>
