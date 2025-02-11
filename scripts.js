@@ -17,6 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const categoryCheckboxes = document.querySelectorAll('.category-checkbox');
     const searchInput = document.getElementById('search');
     const cartCount = document.getElementById('cart-count');
+    const productList = document.getElementById('product-list');
+    let allProducts = [];
 
     function getProductsFromHTML() {
         const productElements = document.querySelectorAll('.product');
@@ -34,7 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function displayProducts(productsToDisplay) {
-        const productList = document.getElementById('product-list');
         if (productList) {
             productList.innerHTML = '';
             productsToDisplay.forEach(product => {
@@ -54,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <select id="size${product.id}">
                         ${product.sizes.map(size => `<option value="${size}">${size}</option>`).join('')}
                     </select>
-                    <button onclick="addToCart(${product.id}, document.getElementById('size${product.id}').value)">Adicionar ao Carrinho</button>
+                    <button class="add-to-cart-button" onclick="addToCart(${product.id}, document.getElementById('size${product.id}').value)">Adicionar ao Carrinho</button>
                 `;
                 productList.appendChild(productElement);
             });
@@ -68,13 +69,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const cartProduct = { ...product, size };
             cart.push(cartProduct);
             localStorage.setItem('cart', JSON.stringify(cart));
-            updateCart();
             updateCartCount();
         }
     }
 
-    window.removeFromCart = function(id) {
-        cart = cart.filter(product => product.id !== id);
+    window.removeFromCart = function(index) {
+        cart.splice(index, 1);
         localStorage.setItem('cart', JSON.stringify(cart));
         updateCart();
         updateCartCount();
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateCart() {
         if (cartItems) {
             cartItems.innerHTML = '';
-            cart.forEach(item => {
+            cart.forEach((item, index) => {
                 const cartItem = document.createElement('div');
                 cartItem.className = 'cart-item';
                 cartItem.innerHTML = `
@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <p>R$ ${item.price}</p>
                     <p>Tamanho: ${item.size}</p>
                     <p>Categoria: ${item.category}</p>
-                    <button class="remove-button" onclick="removeFromCart(${item.id})">Remover</button>
+                    <button class="remove-button" onclick="removeFromCart(${index})">Remover</button>
                 `;
                 cartItems.appendChild(cartItem);
             });
@@ -120,35 +120,43 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     categoryCheckboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', () => {
-            const products = getProductsFromHTML();
-            const selectedOptions = Array.from(categoryCheckboxes)
-                .filter(checkbox => checkbox.checked)
-                .map(checkbox => checkbox.value);
-
-            let filteredProducts;
-
-            if (selectedOptions.length === 0) {
-                filteredProducts = products;
-            } else {
-                filteredProducts = products.filter(product => {
-                    const matchesCategory = selectedOptions.includes(product.category);
-                    const matchesSize = product.sizes.some(size => selectedOptions.includes(size));
-                    return matchesCategory || matchesSize;
-                });
-            }
-
-            displayProducts(filteredProducts);
-        });
+        checkbox.addEventListener('change', applyFilters);
     });
 
     if (searchInput) {
-        searchInput.addEventListener('input', () => {
-            const products = getProductsFromHTML();
-            const searchTerm = searchInput.value.toLowerCase();
-            const filteredProducts = products.filter(product => product.name.toLowerCase().includes(searchTerm));
-            displayProducts(filteredProducts);
-        });
+        searchInput.addEventListener('input', applyFilters);
+    }
+
+    function applyFilters() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const selectedCategories = Array.from(categoryCheckboxes)
+            .filter(cb => cb.checked && (cb.value === "masculino" || cb.value === "feminino"))
+            .map(cb => cb.value);
+        
+        const selectedSizes = Array.from(categoryCheckboxes)
+            .filter(cb => cb.checked && !selectedCategories.includes(cb.value))
+            .map(cb => cb.value);
+    
+        let filteredProducts = allProducts;
+    
+        // Filtra primeiro por categoria, se alguma foi selecionada
+        if (selectedCategories.length > 0) {
+            filteredProducts = filteredProducts.filter(product => selectedCategories.includes(product.category));
+        }
+    
+        // Depois filtra por tamanho, garantindo que o tamanho escolhido pertença à categoria filtrada
+        if (selectedSizes.length > 0) {
+            filteredProducts = filteredProducts.filter(product => 
+                product.sizes.some(size => selectedSizes.includes(size))
+            );
+        }
+    
+        // Filtra pelo termo de pesquisa, se houver
+        if (searchTerm) {
+            filteredProducts = filteredProducts.filter(product => product.name.includes(searchTerm));
+        }
+    
+        displayProducts(filteredProducts);
     }
 
     function getTimeOfDayGreeting() {
@@ -162,18 +170,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    const products = getProductsFromHTML();
-    displayProducts(products);
+    allProducts = getProductsFromHTML();
+    displayProducts(allProducts);
     updateCart();
     updateCartCount();
+
+    // Carrossel
+    const carouselContainer = document.querySelector('.carousel-container');
+    let currentSlide = 0;
+    const totalSlides = document.querySelectorAll('.carousel-item').length;
+
+    function updateCarousel() {
+        const offset = -currentSlide * 100;
+        carouselContainer.style.transform = `translateX(${offset}%)`;
+    }
+
+    function nextSlide() {
+        currentSlide = (currentSlide < totalSlides - 1) ? currentSlide + 1 : 0;
+        updateCarousel();
+    }
+
+    // Movimentação automática do carrossel
+    setInterval(nextSlide, 3000); // Muda de slide a cada 3 segundos
 });
-
-function prevSlide() {
-    const carouselContainer = document.querySelector('.carousel-container');
-    carouselContainer.scrollBy({ left: -carouselContainer.clientWidth, behavior: 'smooth' });
-}
-
-function nextSlide() {
-    const carouselContainer = document.querySelector('.carousel-container');
-    carouselContainer.scrollBy({ left: carouselContainer.clientWidth, behavior: 'smooth' });
-}
