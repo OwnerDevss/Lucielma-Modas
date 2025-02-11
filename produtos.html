@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Produtos - Lucielma Modas</title>
     <link rel="stylesheet" href="styles.css">
-        <link rel="icon" href="img/logo.jpg" type="image/x-icon"> <!-- Linha para adicionar o favicon -->
-
+    <link rel="icon" href="img/logo.png" type="image/x-icon"> <!-- Linha para adicionar o favicon -->
 </head>
 <body>
     <header>
-        <h1>Lucielma Modas</h1>
+        <div class="logo-container">
+            <img src="img/logo.png" alt="Lucielma Modas" class="logo">
+            <span class="site-title">Lucielma Modas</span>
+        </div>
         <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
@@ -39,14 +41,15 @@
                     <label><input type="checkbox" class="category-checkbox" value="Plus Size"> Plus Size</label>
                 </div>
                 <input type="text" id="search" placeholder="Pesquisar produtos">
-                <button id="clear-filters">Limpar Filtros</button>
+                <button id="clear-filters" class="add-to-cart-button">Limpar Filtros</button>
             </div>
             
             <div id="product-list">
                 <!-- Produtos Dinâmicos -->
-                <div class="product" data-id="1" data-name="Camisa Masculina" data-category="masculino" data-price="50" data-image="produto1.jpg" data-sizes="P,M,G">
-                    <img src="produto1.jpg" alt="Camisa Masculina">
+                <div class="product" data-id="1" data-name="Camisa Masculina Vermelha com Bolinhas" data-category="masculino" data-price="50" data-image="produtos/camisa_vermelha_bolinhas.jpg" data-sizes="P,M,G">
+                    <img src="produtos/camisa_vermelha_bolinhas.jpg" alt="Camisa Masculina">
                     <h3>Camisa Masculina</h3>
+                    <h3>Cor: Vermelha</h3>
                     <p>R$ 50</p>
                     <label for="size1">Tamanho:</label>
                     <select id="size1">
@@ -54,10 +57,10 @@
                         <option value="M">M</option>
                         <option value="G">G</option>
                     </select>
-                    <button onclick="addToCart(1, document.getElementById('size1').value)">Adicionar ao Carrinho</button>
+                    <button class="add-to-cart-button" onclick="addToCart(1, document.getElementById('size1').value)">Adicionar ao Carrinho</button>
                 </div>
-                <div class="product" data-id="2" data-name="Camisa Feminina" data-category="feminino" data-price="45" data-image="produto2.jpg" data-sizes="P,M,Plus Size">
-                    <img src="produto2.jpg" alt="Camisa Feminina">
+                <div class="product" data-id="2" data-name="Camisa Feminina" data-category="feminino" data-price="45" data-image="produtos/camisa_verde_manga_longa.jpg" data-sizes="P,M,Plus Size">
+                    <img src="produtos/camisa_verde_manga_longa.jpg" alt="Camisa Feminina">
                     <h3>Camisa Feminina</h3>
                     <p>R$ 45</p>
                     <label for="size2">Tamanho:</label>
@@ -66,11 +69,11 @@
                         <option value="M">M</option>
                         <option value="Plus Size">Plus Size</option>
                     </select>
-                    <button onclick="addToCart(2, document.getElementById('size2').value)">Adicionar ao Carrinho</button>
+                    <button class="add-to-cart-button" onclick="addToCart(2, document.getElementById('size2').value)">Adicionar ao Carrinho</button>
                 </div>
-                <div class="product" data-id="3" data-name="Calça Jeans" data-category="masculino" data-price="100" data-image="produto3.jpg" data-sizes="M,G,Plus Size">
-                    <img src="produto3.jpg" alt="Calça Jeans">
-                    <h3>Calça Jeans</h3>
+                <div class="product" data-id="3" data-name="Calça Jeans Azul" data-category="masculino" data-price="100" data-image="produtos/calça_jeans_azul.jpg" data-sizes="M,G,Plus Size">
+                    <img src="produtos/calça_jeans_azul.jpg" alt="Calça Jeans">
+                    <h3>Calça Jeans Azul</h3>
                     <p>R$ 100</p>
                     <label for="size3">Tamanho:</label>
                     <select id="size3">
@@ -78,7 +81,7 @@
                         <option value="G">G</option>
                         <option value="Plus Size">Plus Size</option>
                     </select>
-                    <button onclick="addToCart(3, document.getElementById('size3').value)">Adicionar ao Carrinho</button>
+                    <button class="add-to-cart-button" onclick="addToCart(3, document.getElementById('size3').value)">Adicionar ao Carrinho</button>
                 </div>
             </div>
         </div>
