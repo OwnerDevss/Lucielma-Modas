@@ -5,18 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lucielma Modas</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="logo.jpg" type="image/x-icon">
-    <style>
-        /* Estilo para tornar o favicon redondo */
-        link[rel="icon"] {
-            border-radius: 50%;
-            overflow: hidden;
-        }
-    </style>
+    <link rel="icon" href="img/logo.png" type="image/x-icon">
+    <!-- Link para Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
-        <h1>Lucielma Modas</h1>
+        <div class="logo-container">
+            <img src="img/logo.png" alt="Lucielma Modas" class="logo">
+            <span class="site-title">Lucielma Modas</span>
+        </div>
         <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
@@ -31,26 +29,39 @@
         </div>
     </header>
     
-    <section id="home">
+    <div id="main-content">
         <div class="carousel">
             <div class="carousel-container">
                 <div class="carousel-item">
-                    <img src="produto1.jpg" alt="Produto 1">
-                    <p>Produto 1</p>
+                    <img src="produtos/camisa_vermelha_bolinhas.jpg" alt="Camisa Masculina">
+                    <p>Camisa Masculina</p>
                 </div>
                 <div class="carousel-item">
-                    <img src="produto2.jpg" alt="Produto 2">
-                    <p>Produto 2</p>
+                    <img src="produtos/camisa_verde_manga_longa.jpg" alt="Camisa Feminina">
+                    <p>Camisa Feminina</p>
                 </div>
                 <div class="carousel-item">
-                    <img src="produto3.jpg" alt="Produto 3">
-                    <p>Produto 3</p>
+                    <img src="produtos/calça_jeans_azul.jpg" alt="Calça Jeans">
+                    <p>Calça Jeans</p>
                 </div>
             </div>
             <button class="carousel-button prev" onclick="prevSlide()">&#10094;</button>
             <button class="carousel-button next" onclick="nextSlide()">&#10095;</button>
         </div>
-    </section>
+
+        <div class="message">
+            <h1>Bem-vindo à Lucielma Modas!</h1>
+            <p>Aqui você encontra as melhores roupas com estilo e conforto. Visite nossa loja e confira nossas novidades!</p>
+            <div class="contact-icons">
+                <a href="https://www.instagram.com/lucielma_modas_?igsh=MTJnNnptcWNpZG91ZA==" target="_blank">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://wa.me/73991037723" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            </div>
+        </div>
+    </div>
 
     <script src="scripts.js"></script>
 </body>
