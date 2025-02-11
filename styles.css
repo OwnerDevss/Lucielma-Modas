@@ -87,13 +87,14 @@ nav ul li a:hover {
 
 #main-content {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     padding: 20px;
 }
 
 .carousel {
     position: relative;
-    width: 30%;
+    width: 100%;
     max-width: 290px;
     overflow: hidden;
     border-radius: 10px;
@@ -121,13 +122,13 @@ nav ul li a:hover {
 }
 
 .message {
-    width: 65%;
+    width: 100%;
     text-align: center;
     padding: 20px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    margin-left: 20px;
+    margin-top: 20px;
 }
 
 .message h1 {
@@ -158,6 +159,7 @@ section {
 
 .content {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .filter {
@@ -310,4 +312,76 @@ section {
 
 #order-button:hover {
     background-color: #555;
+}
+
+/* Media Queries para responsividade */
+
+@media (max-width: 1200px) {
+    #main-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .carousel {
+        width: 80%;
+    }
+
+    .message {
+        width: 80%;
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav ul li {
+        margin: 10px 0;
+    }
+
+    .carousel {
+        width: 90%;
+    }
+
+    .message {
+        width: 90%;
+    }
+
+    .content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .filter, #product-list {
+        width: 100%;
+    }
+
+    .product {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    header .site-title {
+        font-size: 1.2em;
+    }
+
+    .carousel-item img {
+        height: 150px;
+    }
+
+    .message h1 {
+        font-size: 1.5em;
+    }
+
+    .message p {
+        font-size: 1em;
+    }
 }
