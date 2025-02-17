@@ -1,5 +1,5 @@
 class Product {
-    constructor(id, name, category, price, images, sizes, link) {
+    constructor(id, name, category, price, images, sizes, link, color) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -7,6 +7,7 @@ class Product {
         this.images = images.split(',');
         this.sizes = sizes.split(',');
         this.link = link;
+        this.color = color;
     }
 }
 
@@ -32,7 +33,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const images = productElement.dataset.images;
             const sizes = productElement.dataset.sizes;
             const link = productElement.dataset.link;
-            products.push(new Product(id, name, category, price, images, sizes, link));
+            const color = productElement.dataset.color || ''; // Extrai a cor do atributo data-color
+            products.push(new Product(id, name, category, price, images, sizes, link, color));
         });
         return products;
     }
@@ -50,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 productElement.dataset.images = product.images.join(',');
                 productElement.dataset.sizes = product.sizes.join(',');
                 productElement.dataset.link = product.link;
+                productElement.dataset.color = product.color;
                 productElement.innerHTML = `
                     <div class="carousel">
                         <div class="carousel-container">
@@ -58,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                     <h3>${product.name}</h3>
                     <p>R$ ${product.price}</p>
+                    ${product.color ? `<p>Cor: ${product.color}</p>` : ''}
                     <label for="size${product.id}">Tamanho:</label>
                     <select id="size${product.id}">
                         ${product.sizes.map(size => `<option value="${size}">${size}</option>`).join('')}
@@ -70,12 +74,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     window.addToCart = function(id, size) {
-        const products = getProductsFromHTML();
-        const product = products.find(p => p.id === id);
+        const product = allProducts.find(p => p.id === id);
         if (product) {
             const cartProduct = { ...product, size };
             cart.push(cartProduct);
             localStorage.setItem('cart', JSON.stringify(cart));
+            updateCart();
             updateCartCount();
         }
     }
@@ -99,6 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <p>R$ ${item.price}</p>
                     <p>Tamanho: ${item.size}</p>
                     <p>Categoria: ${item.category}</p>
+                    ${item.color ? `<p>Cor: ${item.color}</p>` : ''}
                     <button class="remove-button" onclick="removeFromCart(${index})">Remover</button>
                 `;
                 cartItems.appendChild(cartItem);
@@ -118,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const timeOfDayGreeting = getTimeOfDayGreeting();
             let message = `${timeOfDayGreeting}, gostaria de verificar esses produtos:\n`;
             cart.forEach(item => {
-                message += `* ${item.name} - R$ ${item.price}\nTamanho: ${item.size}\nCategoria: ${item.category}\nLink: ${item.link}\n`;
+                message += `* ${item.name} - R$ ${item.price}\nTamanho: ${item.size}\nCategoria: ${item.category}\n${item.color ? `Cor: ${item.color}\n` : ''}Link: ${item.link}\n\n---\n\n`;
             });
             const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
             window.open(whatsappUrl, '_blank');
