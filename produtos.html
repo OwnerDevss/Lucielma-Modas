@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Produtos - Lucielma Modas</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="img/logo.png" type="image/x-icon"> <!-- Linha para adicionar o favicon -->
+    <link rel="stylesheet" href="produtos.css">
+    <link rel="icon" href="img/logo.png" type="image/x-icon">
 </head>
 <body>
     <header>
@@ -21,7 +22,7 @@
         </nav>
         <div class="cart-icon">
             <a href="carrinho.html">
-                <span class="cart-symbol">&#128722;</span> <!-- Unicode do carrinho 🛒 -->
+                <span class="cart-symbol">&#128722;</span>
                 <span id="cart-count">0</span>
             </a>
         </div>
@@ -46,40 +47,50 @@
             
             <div id="product-list">
                 <!-- Produtos Dinâmicos -->
-                <div class="product" data-id="1" data-name="Camisa Masculina Vermelha com Bolinhas" data-category="masculino" data-price="50" data-image="produtos/camisa_vermelha_bolinhas.jpg" data-sizes="P,M,G">
-                    <img src="produtos/camisa_vermelha_bolinhas.jpg" alt="Camisa Masculina">
-                    <h3>Camisa Masculina</h3>
-                    <h3>Cor: Vermelha</h3>
-                    <p>R$ 50</p>
+                <div class="product" data-id="1" data-name="Conjunto Fio Duplo Mercia" data-category="feminino" data-price="79.99" data-images="produtos/conjunto-fio-duplo-mercia.jpg,produtos/sutia-fio-duplo-mercia.jpg" data-sizes="G" data-link="https://wa.me/p/28712196625093985/557391265271">
+                    <div class="carousel">
+                        <div class="carousel-container">
+                            <div class="carousel-item"><img src="produtos/conjunto-fio-duplo-mercia.jpg" alt="Conjunto Fio Duplo Mercia"></div>
+                            <div class="carousel-item"><img src="produtos/sutia-fio-duplo-mercia.jpg" alt="Sutiã Roxo"></div>
+                        </div>
+                    </div>
+                    <h3>Conjunto Fio Duplo Mercia</h3>
+                    <p>R$ 79.99</p>
                     <label for="size1">Tamanho:</label>
                     <select id="size1">
-                        <option value="P">P</option>
-                        <option value="M">M</option>
                         <option value="G">G</option>
                     </select>
                     <button class="add-to-cart-button" onclick="addToCart(1, document.getElementById('size1').value)">Adicionar ao Carrinho</button>
                 </div>
-                <div class="product" data-id="2" data-name="Camisa Feminina" data-category="feminino" data-price="45" data-image="produtos/camisa_verde_manga_longa.jpg" data-sizes="P,M,Plus Size">
-                    <img src="produtos/camisa_verde_manga_longa.jpg" alt="Camisa Feminina">
-                    <h3>Camisa Feminina</h3>
-                    <p>R$ 45</p>
+
+                <div class="product" data-id="2" data-name="Sutiã Conforto Love" data-category="feminino" data-price="49.99" data-images="produtos/sutia-conforto-love.jpg,produtos/sutia-conforto-love-costa.jpg" data-sizes="G" data-link="https://wa.me/p/9044906978953643/557391265271">
+                    <div class="carousel">
+                        <div class="carousel-container">
+                            <div class="carousel-item"><img src="produtos/sutia-conforto-love.jpg" alt="Sutiã Conforto Love"></div>
+                            <div class="carousel-item"><img src="produtos/sutia-conforto-love-costa.jpg" alt="Sutiã Conforto Love"></div>
+                        </div>
+                    </div>
+                    <h3>Sutiã Conforto Love</h3>
+                    <p>R$ 49.99</p>
                     <label for="size2">Tamanho:</label>
                     <select id="size2">
-                        <option value="P">P</option>
-                        <option value="M">M</option>
-                        <option value="Plus Size">Plus Size</option>
+                        <option value="G">G</option>
                     </select>
                     <button class="add-to-cart-button" onclick="addToCart(2, document.getElementById('size2').value)">Adicionar ao Carrinho</button>
                 </div>
-                <div class="product" data-id="3" data-name="Calça Jeans Azul" data-category="masculino" data-price="100" data-image="produtos/calça_jeans_azul.jpg" data-sizes="M,G,Plus Size">
-                    <img src="produtos/calça_jeans_azul.jpg" alt="Calça Jeans">
-                    <h3>Calça Jeans Azul</h3>
-                    <p>R$ 100</p>
+
+                <div class="product" data-id="3" data-name="Top Duda" data-category="feminino" data-price="39.99" data-images="produtos/top-duda.jpg,produtos/top-duda-costa.jpg" data-sizes="M" data-link="https://wa.me/p/9198917206821400/557391265271">
+                    <div class="carousel">
+                        <div class="carousel-container">
+                            <div class="carousel-item"><img src="produtos/top-duda.jpg" alt="Top Duda"></div>
+                            <div class="carousel-item"><img src="produtos/top-duda-costa.jpg" alt="Top Duda Costas"></div>
+                        </div>
+                    </div>
+                    <h3>Top Duda</h3>
+                    <p>R$ 39.99</p>
                     <label for="size3">Tamanho:</label>
                     <select id="size3">
                         <option value="M">M</option>
-                        <option value="G">G</option>
-                        <option value="Plus Size">Plus Size</option>
                     </select>
                     <button class="add-to-cart-button" onclick="addToCart(3, document.getElementById('size3').value)">Adicionar ao Carrinho</button>
                 </div>
@@ -88,5 +99,6 @@
     </section>
 
     <script src="scripts.js"></script>
+    <script src="produtos.js"></script>
 </body>
 </html>
