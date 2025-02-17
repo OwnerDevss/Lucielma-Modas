@@ -1,11 +1,12 @@
 class Product {
-    constructor(id, name, category, price, image, sizes) {
+    constructor(id, name, category, price, images, sizes, link) {
         this.id = id;
         this.name = name;
         this.category = category;
         this.price = price;
-        this.image = image;
+        this.images = images.split(',');
         this.sizes = sizes.split(',');
+        this.link = link;
     }
 }
 
@@ -28,9 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const name = productElement.dataset.name;
             const category = productElement.dataset.category;
             const price = parseFloat(productElement.dataset.price);
-            const image = productElement.dataset.image;
+            const images = productElement.dataset.images;
             const sizes = productElement.dataset.sizes;
-            products.push(new Product(id, name, category, price, image, sizes));
+            const link = productElement.dataset.link;
+            products.push(new Product(id, name, category, price, images, sizes, link));
         });
         return products;
     }
@@ -45,10 +47,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 productElement.dataset.name = product.name;
                 productElement.dataset.category = product.category;
                 productElement.dataset.price = product.price;
-                productElement.dataset.image = product.image;
+                productElement.dataset.images = product.images.join(',');
                 productElement.dataset.sizes = product.sizes.join(',');
+                productElement.dataset.link = product.link;
                 productElement.innerHTML = `
-                    <img src="${product.image}" alt="${product.name}">
+                    <div class="carousel">
+                        <div class="carousel-container">
+                            ${product.images.map(image => `<div class="carousel-item"><img src="${image}" alt="${product.name}"></div>`).join('')}
+                        </div>
+                    </div>
                     <h3>${product.name}</h3>
                     <p>R$ ${product.price}</p>
                     <label for="size${product.id}">Tamanho:</label>
@@ -87,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const cartItem = document.createElement('div');
                 cartItem.className = 'cart-item';
                 cartItem.innerHTML = `
-                    <img src="${item.image}" alt="${item.name}">
+                    <img src="${item.images[0]}" alt="${item.name}">
                     <h3>${item.name}</h3>
                     <p>R$ ${item.price}</p>
                     <p>Tamanho: ${item.size}</p>
@@ -107,15 +114,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (orderButton) {
         orderButton.addEventListener('click', () => {
-            const whatsappNumber = '73991037723';
+            const whatsappNumber = '557391265271'; // Número no formato internacional sem símbolos
             const timeOfDayGreeting = getTimeOfDayGreeting();
             let message = `${timeOfDayGreeting}, gostaria de verificar esses produtos:\n`;
             cart.forEach(item => {
-                message += `* ${item.name} - R$ ${item.price}\nTamanho: ${item.size}\nCategoria: ${item.category}\n`;
-                message += `${window.location.origin}/${item.image}\n`;
+                message += `* ${item.name} - R$ ${item.price}\nTamanho: ${item.size}\nCategoria: ${item.category}\nLink: ${item.link}\n`;
             });
             const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
             window.open(whatsappUrl, '_blank');
+
+            // Limpar o carrinho após enviar a mensagem
+            cart = [];
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCart();
+            updateCartCount();
         });
     }
 
@@ -153,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
         // Filtra pelo termo de pesquisa, se houver
         if (searchTerm) {
-            filteredProducts = filteredProducts.filter(product => product.name.includes(searchTerm));
+            filteredProducts = filteredProducts.filter(product => product.name.toLowerCase().includes(searchTerm));
         }
     
         displayProducts(filteredProducts);
@@ -176,20 +188,23 @@ document.addEventListener('DOMContentLoaded', () => {
     updateCartCount();
 
     // Carrossel
-    const carouselContainer = document.querySelector('.carousel-container');
-    let currentSlide = 0;
-    const totalSlides = document.querySelectorAll('.carousel-item').length;
+    const carousels = document.querySelectorAll('.carousel');
+    carousels.forEach(carousel => {
+        const carouselContainer = carousel.querySelector('.carousel-container');
+        const totalSlides = carouselContainer.children.length;
+        let currentSlide = 0;
 
-    function updateCarousel() {
-        const offset = -currentSlide * 100;
-        carouselContainer.style.transform = `translateX(${offset}%)`;
-    }
+        function updateCarousel() {
+            const offset = -currentSlide * 100;
+            carouselContainer.style.transform = `translateX(${offset}%)`;
+        }
 
-    function nextSlide() {
-        currentSlide = (currentSlide < totalSlides - 1) ? currentSlide + 1 : 0;
-        updateCarousel();
-    }
+        function nextSlide() {
+            currentSlide = (currentSlide < totalSlides - 1) ? currentSlide + 1 : 0;
+            updateCarousel();
+        }
 
-    // Movimentação automática do carrossel
-    setInterval(nextSlide, 3000); // Muda de slide a cada 3 segundos
+        // Movimentação automática do carrossel
+        setInterval(nextSlide, 3000); // Muda de slide a cada 3 segundos
+    });
 });
